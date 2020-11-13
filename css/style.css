@@ -18,6 +18,15 @@ div {
   vertical-align: middle;
 }
 
+.square {
+
+}
+
+#resetButton {
+  width: 100px;
+
+}
+
 
 /* 1) Define the required constants
 
