@@ -1,6 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
 
-const statusDisplay = document.querySelector('.game--status')
 const wins = [
     [0, 1, 2],
     [3, 4, 5],
@@ -12,86 +11,77 @@ const wins = [
     [2, 5, 8]
 ]
 
+const messages = document.querySelector('#message')
+
 /*---------------------------- Variables (state) ----------------------------*/
 
-const newGame = true;
-const player1 = "X";
-board = [""];
-
-
-//messages
-const winnerMessage = () => `(${player1} wins!`
-const tieMessage = () => "It's a tie!"
-const playerTurn = () => `${player1}'s turn!`;
-
+let currentPlayer = "X";
+let newGame = true;
+let win;
+let board = ["", "", "", "", "", "", "", "", ""];
 
 /*------------------------ Cached Element References ------------------------*/
 
-const gameStatus = document.getElementById()
-const resetButton = document.getElementById("resetButton")
-// You might choose to put your game status here
+const squares = Array.from(document.querySelectorAll('#board div'))
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-document.querySelectorAll('div').forEach(div => div.addEventListener('click', divClicked));
-document.querySelector('#resetButton').addEventListener('click', reset);
+document.getElementById('board').addEventListener('click', playerTurn)
+document.querySelector('.resetButton').addEventListener('click', init);
 
 /*-------------------------------- Functions --------------------------------*/
 
-statusDisplay.innerHTML = playerTurn();
+function getWinner() {
+    let winner = null;
+    wins.forEach(function(win, index) {
+        if (board[win[0]] && board[win[0]] === board[win[1]] && board[win[0]] === board[win[2]]) winner = board[win[0]];
+    })
+    return winner ? winner : board.includes("") ? null : "tie";    
+};
 
-function divClicked(e) {
-    const clickedDiv = e.target;
-    const idx = parseInt(clickedDiv.getAttribute('data-cell-index'));
-    if (gameStatus[idx] !== "" || !newGame) {
-        return;
-    }
+function playerTurn() {
+    let idx = squares.findIndex(function(square) {
+        return square === event.target; //event is deprecated?
+    });
+    board[idx] = currentPlayer;
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    win = getWinner();
+    render();
 }
 
-function divPlayed(clickedDiv, idx) {
-    newGame[idx] = player1;
-    clickedDiv.innerHTML = player1;
+function init() {
+    board = ["", "", "", "", "", "", "", "", ""];
+    render();
+};
+
+function render() {
+    board.forEach(function(mark, index) {
+        squares[index].textContent = mark;
+    });
+    messages.textContent = win === "tie" ? "It's a tie!" : win ? `${win} wins!` : `${currentPlayer}'s turn!`
 }
 
-function playerChange {
-    player1 = player1 === "X" ? "O" : "X";
-    statusDisplay.innerHTML = playerTurn();
-}
-
-function result() {
-    let gameWon = false;
-    for (let i = o; i <= 7; i++) {
-        const win = wins[i];
-        let a = gameStatus[win[0]];
-        let b = gameStatus[win[1]];
-        let c = gameStatus[win[2]];
-        if (a === "" || b === "" || c == "") {
-            continue;
-        }
-        if (a === b && b === c ) {
-            gameWon = true;
-            break
-        }
-    }
-    if (gameWon) {
-        statusDisplay.innerHTML = winnerMessage();
-        newGame = false;
-        return;
-    }
-}
-
-function reset {
-
-}
+init();
 
 
-resetButton.addEventListener('click', )
+
+
+
+
+
+
+
+
+
+
 
 // Some functions you might choose to use:
+
 
 // Initialization function:
 // Where you set your initial state, setting up 
 // what the board will look like upon loading
+
 
 // On-Click function:
 // Set up what happens when one of the elements
@@ -108,3 +98,68 @@ resetButton.addEventListener('click', )
 // Displays the current state of the board
 // on the page, updating the elements to reflect
 // either X or O depending on whose turn it is
+
+
+
+
+//-------------------------------------//
+
+// const resetButton = document.getElementById("resetButton")
+
+// function reset() { 
+//     newGame = true;
+//     currentPlayer = "X";
+//     board = ["", "", "", "", "", "", "", "", ""];
+//     gameStatus.innerHTML = currentPlayerTurn();
+//     document.querySelectorAll('.square').forEach(square => square.innerHTML = "");
+// }
+
+// function divPlayed(clickedDiv, idx) {
+//     board[idx] = currentPlayer;
+//     clickedDiv.innerHTML = currentPlayer;
+// }
+
+// function playerChange() {
+//     currentPlayer = currentPlayer === "X" ? "O" : "X";
+//     gameStatus.innerHTML = currentPlayerTurn();
+// }
+
+// function result() {
+//     let gameWon = false;
+//     for (let i = 0; i <= 7; i++) {
+//         const win = wins[i];
+//         let a = board[win[0]];
+//         let b = board[win[1]];
+//         let c = board[win[2]];
+//         if (a === "" || b === "" || c == "") {
+//             continue;
+//         }
+//         if (a === b && b === c ) {
+//             gameWon = true;
+//             break
+//         }
+//     }
+//     if (gameWon) {
+//         gameStatus.innerHTML = winnerMessage();
+//         newGame = false;
+//         return;
+//     }
+
+//     let tieGame = !board.includes("");
+//     if (tieGame) {
+//         gameStatus.innerHTML = tieMessage();
+//         newGame = false;
+//         return;
+//     }
+//     playerChange();
+// }
+
+// function divClicked(e) {
+//     const clickedDiv = e.target;
+//     const idx = parseInt(clickedDiv.getAttribute('div.square'));
+//     if (gameStatus[idx] !== "" || !newGame) {
+//         return;
+//     }
+// divPlayed(clickedDiv, idx);
+// result();
+// }
