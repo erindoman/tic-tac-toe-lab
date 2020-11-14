@@ -17,8 +17,9 @@ const messages = document.querySelector('#message')
 
 let currentPlayer = "X";
 let newGame = true;
-let win;
+let winner;
 let board = ["", "", "", "", "", "", "", "", ""];
+const messageText = document.getElementById('h2')
 
 /*------------------------ Cached Element References ------------------------*/
 
@@ -45,12 +46,13 @@ function playerTurn() {
     });
     board[idx] = currentPlayer;
     currentPlayer = currentPlayer === "X" ? "O" : "X";
-    win = getWinner();
+    winner = getWinner();
     render();
 }
 
 function init() {
     board = ["", "", "", "", "", "", "", "", ""];
+    const messageText = document.getElementById('h2')
     render();
 };
 
@@ -58,108 +60,7 @@ function render() {
     board.forEach(function(mark, index) {
         squares[index].textContent = mark;
     });
-    messages.textContent = win === "tie" ? "It's a tie!" : win ? `${win} wins!` : `${currentPlayer}'s turn!`
+    messages.textContent = winner === "tie" ? "It's a tie!" : winner ? `${winner} wins!` : `${currentPlayer}'s turn!`
 }
 
 init();
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Some functions you might choose to use:
-
-
-// Initialization function:
-// Where you set your initial state, setting up 
-// what the board will look like upon loading
-
-
-// On-Click function:
-// Set up what happens when one of the elements
-// is clicked
-
-
-// Check winner function:
-// Checks the current state of the board for
-// a winner and changes the state of the winner
-// variable if so
-
-
-// Render function:
-// Displays the current state of the board
-// on the page, updating the elements to reflect
-// either X or O depending on whose turn it is
-
-
-
-
-//-------------------------------------//
-
-// const resetButton = document.getElementById("resetButton")
-
-// function reset() { 
-//     newGame = true;
-//     currentPlayer = "X";
-//     board = ["", "", "", "", "", "", "", "", ""];
-//     gameStatus.innerHTML = currentPlayerTurn();
-//     document.querySelectorAll('.square').forEach(square => square.innerHTML = "");
-// }
-
-// function divPlayed(clickedDiv, idx) {
-//     board[idx] = currentPlayer;
-//     clickedDiv.innerHTML = currentPlayer;
-// }
-
-// function playerChange() {
-//     currentPlayer = currentPlayer === "X" ? "O" : "X";
-//     gameStatus.innerHTML = currentPlayerTurn();
-// }
-
-// function result() {
-//     let gameWon = false;
-//     for (let i = 0; i <= 7; i++) {
-//         const win = wins[i];
-//         let a = board[win[0]];
-//         let b = board[win[1]];
-//         let c = board[win[2]];
-//         if (a === "" || b === "" || c == "") {
-//             continue;
-//         }
-//         if (a === b && b === c ) {
-//             gameWon = true;
-//             break
-//         }
-//     }
-//     if (gameWon) {
-//         gameStatus.innerHTML = winnerMessage();
-//         newGame = false;
-//         return;
-//     }
-
-//     let tieGame = !board.includes("");
-//     if (tieGame) {
-//         gameStatus.innerHTML = tieMessage();
-//         newGame = false;
-//         return;
-//     }
-//     playerChange();
-// }
-
-// function divClicked(e) {
-//     const clickedDiv = e.target;
-//     const idx = parseInt(clickedDiv.getAttribute('div.square'));
-//     if (gameStatus[idx] !== "" || !newGame) {
-//         return;
-//     }
-// divPlayed(clickedDiv, idx);
-// result();
-// }
