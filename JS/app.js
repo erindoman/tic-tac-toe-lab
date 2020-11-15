@@ -11,8 +11,6 @@ const wins = [
     [2, 5, 8]
 ];
 
-const messages = document.querySelector('#message')
-
 /*---------------------------- Variables (state) ----------------------------*/
 
 let turn = "X";
@@ -21,14 +19,13 @@ let board = ["", "", "", "", "", "", "", "", ""];
 
 /*------------------------ Cached Element References ------------------------*/
 
-const squares = document.querySelectorAll('#board div')
-const messageText = document.getElementById('h2')
+const squares = document.querySelectorAll('#board div');
+const messages = document.querySelector('#message');
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-document.getElementById('board').addEventListener('click', playerTurn)
+document.getElementById('board').addEventListener('click', playerTurn);
 document.querySelector('.resetButton').addEventListener('click', init);
-
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -47,14 +44,14 @@ function playerTurn(e) {
     turn = turn === "X" ? "O" : "X";
     winner = getWinner();
     render();
-}
+};
 
 function render() {
     board.forEach(function(mark, idx) {
         squares[idx].textContent = mark;
     });
-    messages.textContent = winner === "tie" ? "It's a tie!" : winner ? `${winner} wins!` : `${turn}'s turn!`
-}
+    messages.textContent = winner === "tie" ? "It's a tie!" : winner ? `${winner} wins!` : `${turn}'s turn!`;
+};
 
 function init() {
     board = ["", "", "", "", "", "", "", "", ""];
